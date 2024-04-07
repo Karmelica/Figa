@@ -15,9 +15,15 @@ public class Shooting : MonoBehaviour
 
     public LayerMask enemy;
     public TextMeshProUGUI textMeshPro;
-    private int totalAmmo = 20;
+    static public int totalAmmo = 20;
     private int magAmmo = 5;
     RaycastHit rayCastHit;
+
+    public void AddAmmo()
+    {
+        totalAmmo += 5;
+        textMeshPro.text = magAmmo.ToString() + "/" + totalAmmo.ToString();
+    }
 
     public void Aim()
     {
@@ -43,7 +49,7 @@ public class Shooting : MonoBehaviour
         {
             if(rayCastHit.collider.gameObject.CompareTag("Enemy"))
             {
-                rayCastHit.collider.SendMessage("TakeDmg");
+                rayCastHit.collider.SendMessageUpwards("TakeDmg");
             }
         }
     }

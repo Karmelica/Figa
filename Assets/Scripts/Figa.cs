@@ -22,7 +22,7 @@ public class Figa : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponentInParent<NavMeshAgent>();
         hp = 5;
     }
 

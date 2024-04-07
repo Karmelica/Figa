@@ -7,9 +7,19 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+    static private bool seenNote;
+
     public void EnterGame()
     {
-        SceneManager.LoadScene(0);
+        if(SceneManager.GetActiveScene().buildIndex == 2 && !seenNote)
+        {
+            SceneManager.LoadScene(0);
+            seenNote = true;
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void ExitGame()

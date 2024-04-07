@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-
     [Header("Components")]
+    public Shooting shooting;
     public Transform orientation;
     private Rigidbody rb;
     public Image sprintBar;
+    public Animator animator;
+    public GameObject shotgun;
+    public GameObject flashlight;
 
     [Header("Stats")]
     public float moveSpeed;
@@ -20,20 +23,44 @@ public class Player : MonoBehaviour
     private bool isSprinting;
     private float sprintCd = 0f;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Shotgun"))
+        {
+            other.gameObject.SetActive(false);
+            shotgun.SetActive(true);
+        }
+        if (other.CompareTag("Flashlight"))
+        { 
+            other.gameObject.SetActive(false);
+            flashlight.SetActive(true);
+        }
+        if (other.CompareTag("Ammo"))
+        {
+            if (shotgun.activeInHierarchy)
+            {
+                other.gameObject.SetActive(false);
+                shooting.AddAmmo();
+            }
+        }
+    }
+
     private void MyInput()
     {
         moveX = Input.GetAxis("Horizontal");
         moveY = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && sprintCd <= 0)
         {
             isSprinting = true;
             speed = sprintSpeed;
+            animator.speed = 2f;
         }
         else
         {
             isSprinting = false;
             speed = moveSpeed;
+            animator.speed = 1f;
         }
     }
 
@@ -66,6 +93,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        shotgun.SetActive(false);
+        flashlight.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -79,6 +108,7 @@ public class Player : MonoBehaviour
         if(!GameMenuScript.isPaused)
         {
             MyInput();
+            animator.SetFloat("Speed", rb.velocity.magnitude);
         }
         Sprint();
     }
