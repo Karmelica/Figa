@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Figa : MonoBehaviour
 {
@@ -9,12 +10,20 @@ public class Figa : MonoBehaviour
     public Transform player;
     private int hp = 5;
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            Application.Quit();
+        }
+    }
+
     public void TakeDmg()
     {
         hp--;
-        Debug.Log("Trfienie, hp: " + hp);
         if(hp <= 0)
         {
+            SceneManager.LoadScene(3);
             gameObject.SetActive(false);
         }
     }

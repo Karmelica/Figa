@@ -11,14 +11,14 @@ public class MenuScript : MonoBehaviour
 
     public void EnterGame()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 2 && !seenNote)
+        if(SceneManager.GetActiveScene().buildIndex == 0 && !seenNote)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
             seenNote = true;
         }
         else
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 

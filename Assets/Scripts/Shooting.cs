@@ -1,11 +1,15 @@
 using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shooting : MonoBehaviour
 {
     private Animator animator;
     public Transform head;
+    public Image cdImage;
+    public AudioSource audioSourceBullet;
+    public AudioSource audioSourceShoot;
 
     private float shootCooldown;
     public Transform gunDown;
@@ -40,6 +44,7 @@ public class Shooting : MonoBehaviour
     private void Shoot()
     {
         shootCooldown = 2f;
+        audioSourceShoot.Play();
         animator.Play("Shoot");
         magAmmo--;
         textMeshPro.text = magAmmo.ToString() + "/" + totalAmmo.ToString();
@@ -52,6 +57,11 @@ public class Shooting : MonoBehaviour
                 rayCastHit.collider.SendMessageUpwards("TakeDmg");
             }
         }
+    }
+
+    public void BulletSound()
+    {
+        audioSourceBullet.Play();
     }
 
     public void ReloadEnd()
@@ -69,7 +79,7 @@ public class Shooting : MonoBehaviour
         magAmmo++;
         totalAmmo--;
         textMeshPro.text = magAmmo.ToString() + "/" + totalAmmo.ToString();
-        if (magAmmo == 5)
+        if (magAmmo >= 5)
         {
             animator.SetTrigger("PutBack");
         }
@@ -87,6 +97,7 @@ public class Shooting : MonoBehaviour
         if (!GameMenuScript.isPaused)
         {
             shootCooldown -= Time.deltaTime;
+            cdImage.fillAmount = shootCooldown / 2f;
             if (!isReloading)
             {
                 Aim();
@@ -98,7 +109,7 @@ public class Shooting : MonoBehaviour
                             Shoot();
                         }
                     }
-                    if (Input.GetKeyDown(KeyCode.R) && shootCooldown < 0)
+                    if (Input.GetKeyDown(KeyCode.R) && shootCooldown < 0 && magAmmo < 5)
                     {
                         animator.Play("Reload");
                     }

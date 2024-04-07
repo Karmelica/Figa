@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     public Image sprintBar;
     public Animator animator;
+    public GameObject ammoCount;
     public GameObject shotgun;
     public GameObject flashlight;
 
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             shotgun.SetActive(true);
+            ammoCount.SetActive(true);
         }
         if (other.CompareTag("Flashlight"))
         { 
@@ -43,6 +45,11 @@ public class Player : MonoBehaviour
                 shooting.AddAmmo();
             }
         }
+    }
+
+    public void ResetInput()
+    {
+        moveX = 0f; moveY = 0f;
     }
 
     private void MyInput()
@@ -95,6 +102,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         shotgun.SetActive(false);
         flashlight.SetActive(false);
+        ammoCount.SetActive(false);
     }
 
     private void FixedUpdate()

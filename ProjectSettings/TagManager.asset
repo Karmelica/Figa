@@ -8,6 +8,10 @@ TagManager:
   - Shotgun
   - Flashlight
   - Ammo
+  - Bone
+  - Clothes
+  - Note
+  - Figa
   layers:
   - Default
   - TransparentFX
@@ -16,7 +20,7 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
+  - Ground
   - 
   - 
   - 
