@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Clues : MonoBehaviour
 {
+    private AudioSource audioSource;
     public GameObject Enemy;
     public GameObject shotgunPickup;
     public GameObject shotgunText;
@@ -107,12 +108,14 @@ public class Clues : MonoBehaviour
         if (pickCount == 4 && !shotgunPicked)
         {
             shotgunPicked = true;
+            audioSource.Play();
             StartCoroutine(EnemySpawn());
         }
     }
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         pickCount = 0;
         bonesEq.SetActive(false);
         figsEq.SetActive(false); ;

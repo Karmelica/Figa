@@ -8,7 +8,7 @@ public class Figa : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
     public Transform player;
-    private int hp = 5;
+    private int hp;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -23,6 +23,8 @@ public class Figa : MonoBehaviour
         hp--;
         if(hp <= 0)
         {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             SceneManager.LoadScene(3);
             gameObject.SetActive(false);
         }
@@ -32,7 +34,7 @@ public class Figa : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponentInParent<NavMeshAgent>();
-        hp = 5;
+        hp = 8;
     }
 
     // Update is called once per frame
