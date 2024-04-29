@@ -61,13 +61,11 @@ public class Player : MonoBehaviour
         {
             isSprinting = true;
             speed = sprintSpeed;
-            animator.speed = 2f;
         }
         else
         {
             isSprinting = false;
             speed = moveSpeed;
-            animator.speed = 1f;
         }
     }
 
@@ -116,7 +114,10 @@ public class Player : MonoBehaviour
         if(!GameMenuScript.isPaused)
         {
             MyInput();
-            animator.SetFloat("Speed", rb.velocity.magnitude);
+            if(rb.velocity.magnitude > 0.9f)
+            {
+                animator.SetFloat("Speed", rb.velocity.magnitude);
+            }
         }
         Sprint();
     }
